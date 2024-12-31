@@ -7,10 +7,10 @@ export const $store = defineStore('$store', () => {
 		referrer: document.referrer,
 		keyword: '',
 		sign: '',
-		token: '83UIRKN890JLFLLFF09LF65JFFLD82UFJB',
-		appID: '1252162195',
-		// txVideoSign: 'aca51a4adbb8d9ceefc2436e3ece5eea',
-		licenseUrl: 'https://license.vod2.myqcloud.com/license/v2/1252162195_1/v_cube.license'
+		token: '',
+		appID: '',
+		// txVideoSign: '',
+		licenseUrl: ''
 	});
 
 	const setReferrer = (referrer: string) => {

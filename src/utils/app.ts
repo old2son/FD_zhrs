@@ -1457,10 +1457,10 @@ var Base = {
 
         let getWechatConfig = function () {
             Base.ajax({
-                url: 'https://jkapi.bj.familydoctor.com.cn/wx/wxAuth/getShareSignature',
+                url: '',
                 type: 'POST',
                 dataType: 'json',
-                data: {'appid': 'wx35d40f8757e2cb84'}, // 服务号千家万户生活网
+                data: {'appid': ''}, // 服务号千家万户生活网
                 headers:{'wx-client-href':location.href.split('#')[0]},
                 success: function (res: any) {
                     if (res) {
