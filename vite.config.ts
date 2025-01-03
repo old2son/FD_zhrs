@@ -1,4 +1,3 @@
-vite 打包配置
  /**
   * 现在 transformIndexHtml，modifyEntryFile，writeBundle 的内容只为 demo。
   * 由于 vite 打包后的文件会有不同位置的引用和判断，注意如果修改打包文件如：添加随机参数等，则会出现多次调用同个包等问题。
