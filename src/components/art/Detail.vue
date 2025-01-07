@@ -16,6 +16,7 @@ import { storeToRefs } from 'pinia';
 import { $store } from '@/stores/$store';
 import appLayout from '@/components/AppLayout.vue';
 import componentSearchArt from '@/components/art/CpnSearchArt.vue';
+import componentList from '@/components/art/CpnList.vue';
 import Base from '@/utils/app';
 // import TCPlayer from 'tcplayer.js';
 // import 'tcplayer.js/dist/tcplayer.min.css';
@@ -347,24 +348,7 @@ watchEffect(async () => {
 			<div class="home-set">
 				<div class="cont-list">
 					<b class="list-title" :class="{ 'list-title-blue': data.article.Type === 3 }">推荐阅读</b>
-					<router-link v-for="m in data.articles" :key="m.Id" :to="{ name: 'Article', params: { id: m.Id } }">
-						<dl>
-							<dt v-if="!m.PicUrl && !m.VideoPicUrl"></dt>
-							<dt
-								v-else-if="m.Type === 3"
-								:style="'background:url(' + m.VideoPicUrl + ') center no-repeat;'"
-							></dt>
-							<dt v-else :style="'background:url(' + m.PicUrl + ') center no-repeat;'"></dt>
-
-							<dd>
-								<b>{{ m.Title }}</b>
-								<i class="icon-clock">{{ formatTime(m.PublishDate) }}</i>
-								<i v-if="m.Type === 0" class="type-art">文章</i>
-								<i v-else-if="m.Type === 3" class="type-video">视频</i>
-								<i v-else-if="m.Type === 4" class="type-art" style="width: 80px;">每日医说</i>
-							</dd>
-						</dl>
-					</router-link>
+					<component-list :articles="data.articles"></component-list>
 				</div>
 			</div>
 		</div>

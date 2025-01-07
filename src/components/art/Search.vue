@@ -6,6 +6,7 @@ import { $store } from '@/stores/$store';
 import appLayout from '@/components/AppLayout.vue';
 import componentSearchArt from '@/components/art/CpnSearchArt.vue';
 import componentLoading from '@/components/art/CpnPageLoading.vue';
+import componentList from '@/components/art/CpnList.vue';
 import Base from '@/utils/app';
 
 interface IData {
@@ -203,25 +204,8 @@ watch(onKeyword, (newKey, oldKey) => {
 
 				<div class="home-set">
 					<div class="set-cont-wrap">
-						<div v-for="(m, i) in data.list" class="cont-list" :key="m.Id">
-							<router-link :to="{ name: 'Article', params: { id: m.Id } }">
-								<dl>
-									<dt v-if="!m.PicUrl && !m.VideoPicUrl"></dt>
-									<dt
-										v-else-if="m.Type === 3"
-										:style="'background:url(' + m.VideoPicUrl + ') center no-repeat;'"
-									></dt>
-									<dt v-else :style="'background:url(' + m.PicUrl + ') center no-repeat;'"></dt>
-
-									<dd>
-										<b>{{ m.Title }}</b>
-										<i class="icon-clock">{{ formatTime(m.PushPublishDate) }}</i>
-										<i v-if="m.Type === 0" class="type-art">文章</i>
-										<i v-else-if="m.Type === 3" class="type-video">视频</i>
-										<i v-else-if="m.Type === 4" class="type-art" style="width: 80px;">每日医说</i>
-									</dd>
-								</dl>
-							</router-link>
+						<div class="cont-list">
+							<component-list :articles="data.list"></component-list>
 						</div>
 					</div>
 				</div>
@@ -250,28 +234,7 @@ watch(onKeyword, (newKey, oldKey) => {
 					<b class="search-relate-title">相关推荐</b>
 
 					<div class="set-cont-wrap">
-						<div v-for="(m, i) in data.otherRelateList" class="cont-list" :key="m.Id">
-							<router-link :to="{ name: 'Article', params: { id: m.Id } }">
-								<dl>
-									<dt v-if="!m.PicUrl && !m.VideoPicUrl"></dt>
-									<dt
-										v-else-if="m.Type === 3"
-										:style="'background:url(' + m.VideoPicUrl + ') center no-repeat;'"
-									>
-										<i class="icon-play"></i>
-									</dt>
-									<dt v-else :style="'background:url(' + m.PicUrl + ') center no-repeat;'"></dt>
-
-									<dd>
-										<b>{{ m.Title }}</b>
-										<i class="icon-clock">{{ formatTime(m.PushPublishDate) }}</i>
-										<i v-if="m.Type === 0" class="type-art">文章</i>
-										<i v-else-if="m.Type === 3" class="type-video">视频</i>
-										<i v-else-if="m.Type === 4" class="type-art" style="width: 80px;">每日医说</i>
-									</dd>
-								</dl>
-							</router-link>
-						</div>
+						<component-list :articles="data.otherRelateList"></component-list>
 					</div>
 				</div>
 			</div>

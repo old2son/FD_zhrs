@@ -18,6 +18,7 @@ import { $store } from '@/stores/$store';
 import appLayout from '@/components/AppLayout.vue';
 import componentSearchArt from '@/components/art/CpnSearchArt.vue';
 import componentLoading from '@/components/art/CpnPageLoading.vue';
+import componentList from '@/components/art/CpnList.vue';
 import Base from '@/utils/app';
 
 interface IData {
@@ -86,21 +87,21 @@ const goTop = () => {
 
 	data.isScroll = true;
 	nextTick(() => {
-		let timer = setInterval(function () {
+		let timer = function () {
 			let osTop = document.documentElement.scrollTop || document.body.scrollTop;
 			let ispeed = Math.floor(-osTop / 5);
 			document.documentElement.scrollTop = document.body.scrollTop = osTop + ispeed;
 
 			if (osTop === 0) {
 				data.isScroll = false;
-				clearInterval(timer);
+				cancelAnimationFrame(step);
+				return;
 			}
-		}, 30);
-	});
-};
+			step = requestAnimationFrame(timer);
+		};
 
-const formatTime = (timestamp: number) => {
-	return Base.formatTime(timestamp * 1000);
+		let step = requestAnimationFrame(timer);
+	});
 };
 
 const changeRoute = (cateId: number) => {
@@ -299,8 +300,8 @@ onMounted(() => {
 			link: Base.getShareLink(route.path)
 		});
 	}, 300);
-
-	window.addEventListener('scroll', scrollToTop);
+	
+	window.addEventListener('scroll', Base.throttle(scrollToTop, 300));
 });
 
 onUnmounted(() => {
@@ -337,21 +338,7 @@ onBeforeRouteUpdate(async (to, from, next) => {
 			<div class="set-cont-wrap">
 				<template v-for="(cate, i) in data.cates" :key="cate.Id">
 					<div v-show="data.currTab === i" class="cont-list js-tab-item">
-						<router-link v-for="(art, artIndex) in cate.articles" :key="art.Id" :to="'/Article/' + art.Id">
-							<dl>
-								<dt v-if="!art.PicUrl && !art.VideoPicUrl"></dt>
-								<dt v-else-if="art.Type === 3" :style="'background:url(' + art.VideoPicUrl + ') center no-repeat;'"></dt>
-								<dt v-else :style="'background:url(' + art.PicUrl + ') center no-repeat;'"></dt>
-
-								<dd>
-									<b>{{ art.Title }}</b>
-									<i class="icon-clock">{{ formatTime(art.PushPublishDate) }}</i>
-									<i v-if="art.Type === 0" class="type-art">文章</i>
-									<i v-else-if="art.Type === 3" class="type-video">视频</i>
-									<i v-else-if="art.Type === 4" class="type-art" style="width: 80px;">每日医说</i>
-								</dd>
-							</dl>
-						</router-link>
+						<component-list :articles="cate.articles"></component-list>
 					</div>
 				</template>
 			</div>
