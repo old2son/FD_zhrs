@@ -126,12 +126,13 @@ const loadData = () => {
 					let desc: string = '';
 					let imgUrl: string | null | undefined = '';
 
-					if (res.Data.Article.Type === 0) {
-						Player.value = null;
-						imgUrl = res.Data.Article.PicUrl || '';
-					} else if (res.Data.Article.Type === 3) {
+					if (res.Data.Article.Type === 3) {
 						desc = res.Data.Article.Title;
 						imgUrl = res.Data.Article.VideoPicUrl || res.Data.Article.DoctorImage;
+					}
+					else {
+						Player.value = null;
+						imgUrl = res.Data.Article.PicUrl || '';
 					}
 
 					desc = res.Data.Article.Summary;
