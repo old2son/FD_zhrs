@@ -25,13 +25,15 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 			host: '0.0.0.0',
 			port: parseInt(env.VITE_PORT, 10) as number,
 			cors: true, // 默认启用
-			proxy: {
-				[`/${env.VITE_API_URL}`]: {
-					target: env.VITE_API_URL_TARGET,
-					changeOrigin: true,
-					rewrite: (path) => path.replace(new RegExp(`^/${env.VITE_API_URL}`), '')
-				}
-			}
+			proxy: mode === 'development'
+				? {
+						[`/${env.VITE_API_URL}`]: {
+							target: env.VITE_API_URL_TARGET,
+							changeOrigin: true,
+							rewrite: (path) => path.replace(new RegExp(`^/${env.VITE_API_URL}`), '')
+						}
+				  }
+				: undefined
 		},
 		plugins: [
 			vue(),
