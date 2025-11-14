@@ -26,7 +26,7 @@
 	"devDependencies": {
 		"@types/crypto-js": "^4.2.2",
 		"@types/node": "^18.19.68",
-		"@vitejs/plugin-vue": "^4.6.2",
+		"@vitejs/plugin-vue": "^6.0.1",
 		"tcplayer.js": "^5.2.0",
 		"typescript": "^4.9.5",
 		"vite": "^6.0.3",
